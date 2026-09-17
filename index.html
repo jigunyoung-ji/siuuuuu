@@ -49,7 +49,84 @@
 
   <!-- 4. 푸터 영역 -->
   <div class="footer">
-    <p>&copy; 2026 내 웹사이트</p>
+  <p>&copy; 2026 내 웹사이트</p>
+  </div>
+
+</body>
+</html>
+
+HTML
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>예시2 - 카드 단위로 div 나누기</title>
+  <style>
+    * { box-sizing:border-box; }
+    body { font-family: sans-serif; background: #eee; margin: 0; padding: 30px; }
+
+    .card-list {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      width: 220px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* 이미지 영역 수정 부분 */
+    .card-image {
+      background: #4a90e2;
+      color: white;
+      height: 100px;
+      display: flex;          /* Flexbox 적용 */
+      align-items: center;     /* 수직 정렬 */
+      justify-content: center; /* 수평 정렬 */
+      font-size: 14px;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+    .card-body h3 { margin : 0 0 8px; }
+    .card-body p  { margin : 0; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <h2>학생 소개 카드</h2>
+
+  <div class="card-list">
+
+    <div class="card">
+      <div class="card-image">사진 자리</div>
+      <div class="card-body">
+        <h3>이름: 홍길동</h3>
+        <p>관심 분야: 인공지능</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">사진 자리</div>
+      <div class="card-body">
+        <h3>이름: 김영희</h3>
+        <p>관심 분야: 로봇공학</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">사진 자리</div>
+      <div class="card-body">
+        <h3>이름: 박철수</h3>
+        <p>관심 분야: 게임 개발</p>
+      </div>
+    </div>
+
   </div>
 
 </body>
