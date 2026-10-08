@@ -3,398 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공룡 지식 보관소</title>
-    <!-- CSS 필수 요소: link를 통한 폰트 로드 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <title>공룡 정보 공유 웹사이트</title>
+    <!-- 조건 6 충족: link 태그 사용 (웹 폰트 불러오기) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
     <style>
-        /* CSS 필수 요소: 마진, 패딩, 배경색 등 초기화 */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* 기본 바디 설정 (검은색과 흰색 기반) */
+        /* 기본 리셋 및 폰트 설정 */
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #e9e9e9;
-            color: #000;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: #f0f0f0; /* 배경 회색톤 지정 */
+            margin: 0;
+            padding: 0;
+            display: flex; /* 조건 6 충족: display flex */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
-        /* 중앙 정렬을 위한 래퍼 컨테이너 설정 */
-        .main-wrapper {
-            width: 100%;
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-            /* CSS 필수 요소: display (flex) */
+        /* 
+         * [기능 구현] JS 없는 버튼 작동을 위한 글로벌 상태 체크박스 (숨김 처리) 
+         * 다크모드와 텍스트 확대를 제어합니다.
+         */
+        #dark-mode-toggle, #text-zoom-toggle {
+            display: none;
+        }
+
+        /* 다크모드 활성화 시 CSS 변경 */
+        #dark-mode-toggle:checked ~ .app-wrapper {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        #dark-mode-toggle:checked ~ .app-wrapper .content-area,
+        #dark-mode-toggle:checked ~ .app-wrapper .bottom-menu,
+        #dark-mode-toggle:checked ~ .app-wrapper .dropdown-list {
+            background-color: #2a2a2a;
+            border-color: #555;
+            color: #fff;
+        }
+        #dark-mode-toggle:checked ~ .app-wrapper table th {
+            background-color: #444;
+            color: #fff;
+        }
+        #dark-mode-toggle:checked ~ .app-wrapper a {
+            color: #8ab4f8; /* 어두운 배경에 맞는 링크 색상 */
+        }
+
+        /* 텍스트 확대 활성화 시 CSS 변경 */
+        #text-zoom-toggle:checked ~ .app-wrapper {
+            font-size: 1.15em;
+        }
+
+        /* 메인 컨테이너 */
+        .app-wrapper {
+            width: 800px; /* 조건 6 충족: width */
+            max-width: 95%;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            background-color: #ffffff;
+            padding: 20px; /* 조건 6 충족: padding */
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* 1. 본문 영역 & 2. 내용 영역 (마우스 휠 스크롤 적용) */
-        .content-box {
-            border: 2px solid #000;
-            border-radius: 12px;
-            background-color: #fff;
-            padding: 25px;
-            /* CSS 필수 요소: height, 스크롤 조건 충족 */
-            height: 60vh;
-            overflow-y: scroll;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* 1. 본문 영역 (마우스 휠 스크롤 가능) */
+        .content-area {
+            border: 2px solid #000000; /* 조건 6 충족: border */
+            border-radius: 10px;
+            height: 500px; /* 조건 6 충족: height */
+            overflow-y: auto; /* 마우스 휠을 이용한 상하 스크롤 */
+            padding: 20px;
+            background-color: #ffffff; /* 조건 6 충족: background-color */
         }
 
-        .header-title {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        /* 게시물 스타일링 */
+        /* 게시글(post) 스타일 */
         .post {
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 2px dashed #ccc;
+            margin-bottom: 40px; /* 조건 6 충족: margin */
+        }
+
+        .post-header {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        /* 조건 6 충족: h1~h3 중 h2, h3 / span / display inline-block */
+        .post-header h2, .post-header h3 {
+            display: inline-block; 
+            margin: 0 10px 0 0;
+            color: inherit;
+        }
+
+        .post-header span {
+            display: inline-block;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* 2. 내용 영역 (클릭 시 전체 내용) */
+        .content-toggle { display: none; }
+        
+        .gradient-box {
+            display: block;
+            height: 120px;
+            /* 흑백 기반의 그라데이션 박스 디자인 (사진 속 모습 구현) */
+            background: linear-gradient(to bottom, #111111, #ffffff);
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            position: relative;
+            transition: opacity 0.2s;
+        }
+
+        .gradient-box:hover { opacity: 0.8; }
+        .gradient-box::after {
+            content: "클릭 시 전체 내용 보기";
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #000;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .gradient-box:hover::after { opacity: 1; }
+
+        /* 체크박스가 선택되면 그라데이션 상자는 숨기고 실제 내용을 보여줌 */
+        .content-toggle:checked + .gradient-box { display: none; }
+        .content-toggle:checked ~ .full-content { display: block; }
+
+        /* 실제 내용 (처음엔 숨겨짐) */
+        .full-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            animation: fadeIn 0.4s;
         }
         
-        .post:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .post h2 {
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-
-        /* 제목 옆 간략한 요약 (span 활용) */
-        .summary {
-            font-size: 0.55em;
-            color: #666;
-            font-weight: normal;
-            margin-left: 12px;
-            /* CSS 필수 요소: display (inline-block) */
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        /* 이미지 스타일링 (흑백 톤 유지 및 사진의 그라데이션 박스 느낌 구현) */
-        .post-img {
-            /* CSS 필수 요소: width */
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            background: linear-gradient(to bottom, #111, #ccc);
-            margin-bottom: 20px;
-            border: 1px solid #333;
-            filter: grayscale(100%);
-        }
-
-        .post-desc {
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* 표(Table) 스타일링 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-        }
-
-        /* 3, 4, 5. 사이드 메뉴(설정 및 트렌드 구역) */
-        .menu-box {
-            border: 2px solid #000;
-            border-radius: 12px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .menu-btn-container {
+        /* 5. 사이드 메뉴(구상도 상단/하단 메뉴 영역) 컨테이너 */
+        .bottom-menu {
             display: flex;
             gap: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #fff;
         }
 
-        .menu-btn {
+        /* 트렌드 구역 및 설정 구역 (드롭다운을 위한 래퍼) */
+        .menu-wrapper {
             flex: 1;
+            position: relative;
+        }
+
+        /* 흑백 기반 버튼 (사진 속 검은 바탕에 흰 글씨) */
+        .menu-btn {
+            display: block;
             background-color: #000;
             color: #fff;
             text-align: center;
-            padding: 18px;
-            cursor: pointer;
-            font-size: 1.1rem;
+            padding: 15px;
+            border-radius: 5px;
             font-weight: bold;
-            border-radius: 8px;
-            display: inline-block;
+            cursor: pointer;
             transition: background-color 0.2s;
         }
+        .menu-btn:hover { background-color: #333; }
 
-        .menu-btn:hover {
-            background-color: #444;
-        }
+        .menu-toggle { display: none; }
 
-        /* 숨겨진 체크박스 (기능 작동용) */
-        .hidden-check {
-            display: none;
-        }
-
-        /* 드롭다운 숨김 콘텐츠 */
-        .toggle-content {
-            display: none;
-            padding-top: 25px;
-            margin-top: 20px;
-            border-top: 2px dashed #000;
-        }
-
-        /* HTML/CSS만으로 버튼 클릭 효과 구현 (체크박스 해킹) */
-        #trend-check:checked ~ .trend-content {
-            display: block;
-        }
-        #setting-check:checked ~ .setting-content {
-            display: block;
-        }
-
-        /* 트렌드 리스트 스타일 */
-        .trend-list {
-            padding-left: 20px;
-            line-height: 1.8;
-        }
-        
-        .trend-list a, .era-list a {
-            color: #000;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .trend-list a:hover, .era-list a:hover {
-            text-decoration: underline;
-        }
-
-        /* 설정 버튼들 */
-        .setting-actions {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .action-btn {
-            background-color: #eee;
-            border: 2px solid #000;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-weight: bold;
-            display: inline-block;
-            border-radius: 5px;
-        }
-
-        .action-btn:hover {
-            background-color: #ddd;
-        }
-
-        .era-list {
-            padding-left: 20px;
-            line-height: 1.8;
-        }
-
-        /* ---------------------------------------------------
-           기능 구현 (JavaScript 없이 CSS만으로 설정 적용) 
-           --------------------------------------------------- */
-        
-        /* 텍스트 확대 기능 */
-        #text-large-check:checked ~ .main-wrapper {
-            font-size: 1.25rem;
-        }
-        
-        /* 다크 모드 (배경 검은색으로 변경) 기능 */
-        #dark-mode-check:checked ~ .main-wrapper .content-box,
-        #dark-mode-check:checked ~ .main-wrapper .menu-box {
-            background-color: #1a1a1a;
-            color: #fff;
-            border-color: #555;
-        }
-        #dark-mode-check:checked ~ body {
-            background-color: #000;
-        }
-        #dark-mode-check:checked ~ .main-wrapper .menu-btn {
+        /* 드롭다운 리스트 (사진 요구사항: 버튼 아래로 내용물이 나오게 할 것) */
+        .dropdown-list {
+            display: none; /* 평소엔 숨김 */
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
             background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 5px;
+            box-sizing: border-box;
+            z-index: 10;
+            padding: 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* 버튼을 누르면(체크되면) 아래 드롭다운 표시 */
+        .menu-toggle:checked ~ .dropdown-list {
+            display: block;
+        }
+
+        /* 리스트 스타일 (ol, ul, li) */
+        .dropdown-list ol, .dropdown-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .dropdown-list li {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        .dropdown-list li:last-child { margin-bottom: 0; }
+        
+        .settings-title {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+            margin-top: 15px;
+        }
+        .settings-title:first-child { margin-top: 0; }
+
+        /* 설정 변경용 버튼 디자인 (라벨을 버튼처럼) */
+        .action-label {
+            display: inline-block;
+            background-color: #eee;
             color: #000;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 0.85em;
+            cursor: pointer;
         }
-        #dark-mode-check:checked ~ .main-wrapper .summary {
-            color: #aaa;
-        }
-        #dark-mode-check:checked ~ .main-wrapper th {
-            background-color: #333;
+        .action-label:hover { background-color: #ddd; }
+        
+        .close-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            background-color: #000;
             color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        #dark-mode-check:checked ~ .main-wrapper td, 
-        #dark-mode-check:checked ~ .main-wrapper th {
-            border-color: #777;
+
+        /* 공룡 관련 이미지 및 테이블(표) 꾸미기 */
+        .dino-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: block;
+            margin-bottom: 15px;
         }
-        #dark-mode-check:checked ~ .main-wrapper .trend-list a,
-        #dark-mode-check:checked ~ .main-wrapper .era-list a {
-            color: #4da6ff;
+
+        table.dino-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
         }
-        #dark-mode-check:checked ~ .main-wrapper .action-btn {
-            background-color: #333;
-            color: #fff;
-            border-color: #888;
+        table.dino-table th, table.dino-table td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
         }
+        table.dino-table th { background-color: #f5f5f5; width: 30%; color: #333; }
+        
+        /* 조건 6 충족: a 태그 꾸미기 */
+        a { color: #0056b3; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <!-- UI 기능을 담당하는 숨겨진 체크박스 (전역 설정용) -->
-    <input type="checkbox" id="text-large-check" class="hidden-check">
-    <input type="checkbox" id="dark-mode-check" class="hidden-check">
+    <!-- 사이트 설정 제어를 위한 Global Checkbox (숨김, CSS로 뷰 제어) -->
+    <input type="checkbox" id="dark-mode-toggle">
+    <input type="checkbox" id="text-zoom-toggle">
 
-    <div class="main-wrapper">
-        
-        <!-- 1. 본문 영역 & 2. 내용 영역 -->
-        <div class="content-box">
-            <h1 class="header-title">공룡 정보 공유 커뮤니티</h1>
-            <p style="text-align: center;">다양한 고생물들의 놀라운 정보를 탐구해 보세요.</p>
-            <br>
+    <div class="app-wrapper">
+        <!-- 조건 6 충족: h1 사용 -->
+        <h1 style="text-align: center; margin-top: 0;">Dinopedia : 공룡 정보 공유</h1>
 
+        <!-- 1. 본문 영역 -->
+        <!-- 조건 3 충족: 마우스 휠을 이용해 상하로 움직일 수 있는 컨테이너 -->
+        <div class="content-area">
+            
             <!-- 첫 번째 게시물 -->
-            <div class="post" id="trex">
-                <h2>티라노사우루스 <span class="summary">역사상 가장 유명한 폭군 도마뱀</span></h2>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tyrannosaurus_rex_by_durbed.jpg/800px-Tyrannosaurus_rex_by_durbed.jpg" alt="티라노사우루스의 흑백 복원도" class="post-img">
-                <p class="post-desc">
-                    티라노사우루스는 백악기 후기 북아메리카 대륙에서 서식했던 거대한 수각류 공룡입니다.<br>
-                    강력한 턱힘과 크고 톱니 같은 이빨을 무기로 삼아 당시 생태계의 최상위 포식자로 군림했습니다.
-                </p>
-                <table>
-                    <tr>
-                        <th>분류</th>
-                        <th>시대</th>
-                        <th>식성</th>
-                        <th>몸길이</th>
-                    </tr>
-                    <tr>
-                        <td>용반목 수각류</td>
-                        <td>백악기 후기</td>
-                        <td>육식</td>
-                        <td>약 12~13m</td>
-                    </tr>
-                </table>
+            <div class="post">
+                <div class="post-header">
+                    <!-- 조건 6 충족: h2, span -->
+                    <h2>티라노사우루스 렉스</h2>
+                    <span>백악기 후기의 최상위 포식자</span>
+                </div>
+                
+                <!-- 2. 내용 영역 (클릭 시 전체 내용) 및 구상도의 그라데이션 박스 형태 적용 -->
+                <div class="post-content">
+                    <input type="checkbox" id="post1-toggle" class="content-toggle">
+                    <!-- 그라데이션 박스 (클릭 가능한 라벨) -->
+                    <label for="post1-toggle" class="gradient-box"></label>
+                    
+                    <!-- 확장 시 보여질 실제 본문 -->
+                    <div class="full-content">
+                        <!-- 조건 6 충족: img 태그 (alt 포함) -->
+                        <img src="https://images.unsplash.com/photo-1596484552834-6a58f849cf27?auto=format&fit=crop&w=800&q=80" alt="티라노사우루스 화석" class="dino-img">
+                        
+                        <!-- 조건 6 충족: p, br 태그 -->
+                        <p>티라노사우루스(Tyrannosaurus)는 '폭군 도마뱀'이라는 뜻을 가진 수각류 공룡입니다.<br>강력한 턱과 거대한 이빨로 당대 생태계의 최정점에 있었습니다.</p>
+                        
+                        <!-- 조건 6 충족: 표(table, tr, th, td) 태그 -->
+                        <table class="dino-table">
+                            <tr>
+                                <th>분류</th>
+                                <td>용반목 수각류</td>
+                            </tr>
+                            <tr>
+                                <th>생존 시기</th>
+                                <td>백악기 후기 (약 6,800만 년 전 ~ 6,600만 년 전)</td>
+                            </tr>
+                        </table>
+                        
+                        <!-- 조건 6 충족: a 태그 -->
+                        <p><a href="#trex-info">상세 논문 정보 읽으러 가기</a></p>
+                        <label for="post1-toggle" class="close-btn">내용 닫기</label>
+                    </div>
+                </div>
             </div>
 
             <!-- 두 번째 게시물 -->
-            <div class="post" id="tricera">
-                <h2>트리케라톱스 <span class="summary">세 개의 뿔을 가진 초식 공룡</span></h2>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Triceratops_illustration.jpg/800px-Triceratops_illustration.jpg" alt="트리케라톱스의 흑백 복원도" class="post-img">
-                <p class="post-desc">
-                    트리케라톱스는 거대한 프릴과 얼굴에 난 세 개의 뿔이 특징인 각룡류 공룡입니다.<br>
-                    이 뿔과 프릴은 방어용 무기이면서 동시에 동족 간의 과시용으로 쓰였을 것으로 추정됩니다.
-                </p>
-                <table>
-                    <tr>
-                        <th>분류</th>
-                        <th>시대</th>
-                        <th>식성</th>
-                        <th>몸길이</th>
-                    </tr>
-                    <tr>
-                        <td>조반목 각룡류</td>
-                        <td>백악기 후기</td>
-                        <td>초식</td>
-                        <td>약 8~9m</td>
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- 세 번째 게시물 -->
-            <div class="post" id="brachio">
-                <h2>브라키오사우루스 <span class="summary">하늘을 찌를 듯한 거대한 목</span></h2>
-                <!-- 임시 플레이스홀더 이미지 (이미지 로드 실패시에도 흑백 그라데이션 적용됨) -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Brachiosaurus_DB.jpg/800px-Brachiosaurus_DB.jpg" alt="브라키오사우루스의 흑백 복원도" class="post-img">
-                <p class="post-desc">
-                    앞다리가 뒷다리보다 길어 등이 뒤쪽으로 경사진 독특한 체형을 가진 용각류입니다.<br>
-                    높은 나무의 잎을 먹기 유리한 구조를 띠고 있었습니다.
-                </p>
-                <table>
-                    <tr>
-                        <th>분류</th>
-                        <th>시대</th>
-                        <th>식성</th>
-                        <th>몸길이</th>
-                    </tr>
-                    <tr>
-                        <td>용반목 용각류</td>
-                        <td>쥐라기 후기</td>
-                        <td>초식</td>
-                        <td>약 26~30m</td>
-                    </tr>
-                </table>
-            </div>
-
-        </div>
-
-        <!-- 3, 4, 5. 사이드 메뉴 영역 (하단 배치) -->
-        <div class="menu-box">
-            <!-- 하단 메뉴 제어용 숨겨진 체크박스 -->
-            <input type="checkbox" id="trend-check" class="hidden-check">
-            <input type="checkbox" id="setting-check" class="hidden-check">
-
-            <div class="menu-btn-container">
-                <!-- 트렌드 구역 버튼 -->
-                <label for="trend-check" class="menu-btn">트렌드</label>
-                <!-- 설정 구역 버튼 -->
-                <label for="setting-check" class="menu-btn">사이트 설정 및 시대 설정</label>
-            </div>
-
-            <!-- 트렌드 버튼 클릭 시 나타나는 구역 -->
-            <div class="trend-content toggle-content">
-                <h3>🔥 현재 트렌드 게시물 (1위 ~ 10위)</h3>
-                <br>
-                <ol class="trend-list">
-                    <li><a href="#trex">티라노사우루스의 치악력에 대한 새로운 논문 (조회수 급상승)</a></li>
-                    <li><a href="#tricera">트리케라톱스의 프릴은 정말 방어용이었을까?</a></li>
-                    <li><a href="#brachio">쥐라기 초식공룡들의 하루 식사량 분석</a></li>
-                    <li><a href="#">안킬로사우루스의 꼬리 곤봉 타격력 연구</a></li>
-                    <li><a href="#">벨로키랍토르 깃털 화석 발견의 의의</a></li>
-                    <li><a href="#">스피노사우루스: 육식인가 수생 포식자인가?</a></li>
-                    <li><a href="#">익룡은 공룡이 아니다? 팩트 체크 및 분류법</a></li>
-                    <li><a href="#">스테고사우루스 골판의 온도 조절 기능성에 관하여</a></li>
-                    <li><a href="#">코엘로피시스와 초기 트라이아스기 생태계</a></li>
-                    <li><a href="#">화석 발굴 현장에서 새로 발견된 미지의 발자국</a></li>
-                </ol>
-            </div>
-
-            <!-- 사이트 설정 및 시대 설정 버튼 클릭 시 나타나는 구역 -->
-            <div class="setting-content toggle-content">
-                <h3>⚙️ 사이트 설정</h3>
-                <br>
-                <div class="setting-actions">
-                    <!-- 전역 체크박스를 제어하여 JS 없이 기능 구현 -->
-                    <label for="text-large-check" class="action-btn">텍스트 확대 / 축소 토글</label>
-                    <label for="dark-mode-check" class="action-btn">배경 검은색으로 변경 (다크 모드)</label>
+            <div class="post">
+                <div class="post-header">
+                    <!-- 조건 6 충족: h3 -->
+                    <h3>트리케라톱스</h3>
+                    <span>세 개의 뿔을 가진 초식 공룡</span>
                 </div>
                 
-                <br>
-                <h3>⏳ 시대 설정 (게시판 필터링)</h3>
-                <br>
-                <ul class="era-list">
-                    <li><a href="#">트라이아스기 (Triassic Period) 생물 보기</a></li>
-                    <li><a href="#">쥐라기 (Jurassic Period) 생물 보기</a></li>
-                    <li><a href="#">백악기 (Cretaceous Period) 생물 보기</a></li>
-                </ul>
+                <div class="post-content">
+                    <input type="checkbox" id="post2-toggle" class="content-toggle">
+                    <label for="post2-toggle" class="gradient-box"></label>
+                    
+                    <div class="full-content">
+                        <p>트리케라톱스는 백악기 후기에 북아메리카에 살았던 각룡류 초식 공룡입니다.<br>거대한 프릴(머리 장식)과 3개의 뿔을 이용해 포식자로부터 몸을 방어했습니다.</p>
+                        <label for="post2-toggle" class="close-btn">내용 닫기</label>
+                    </div>
+                </div>
             </div>
+            
+            <!-- 스크롤 테스트용 더미 게시물들 -->
+            <div class="post">
+                <div class="post-header">
+                    <h3>벨로키랍토르</h3>
+                    <span>재빠른 사냥꾼</span>
+                </div>
+                <div class="post-content">
+                    <input type="checkbox" id="post3-toggle" class="content-toggle">
+                    <label for="post3-toggle" class="gradient-box"></label>
+                    <div class="full-content">
+                        <p>깃털을 가졌을 것으로 추정되는 소형 수각류 육식 공룡입니다.</p>
+                        <label for="post3-toggle" class="close-btn">내용 닫기</label>
+                    </div>
+                </div>
+            </div>
+            <div class="post" style="margin-bottom: 0;">
+                <div class="post-header">
+                    <h3>브라키오사우루스</h3>
+                    <span>거대한 목의 소유자</span>
+                </div>
+                <div class="post-content">
+                    <input type="checkbox" id="post4-toggle" class="content-toggle">
+                    <label for="post4-toggle" class="gradient-box"></label>
+                    <div class="full-content">
+                        <p>쥐라기 후기에 서식한 거대한 용각류입니다.</p>
+                        <label for="post4-toggle" class="close-btn">내용 닫기</label>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
+        <!-- 5. 사이드 메뉴(보고서 상 하단에 위치한 메뉴 영역) -->
+        <div class="bottom-menu">
+            
+            <!-- 4. 트렌드 구역 -->
+            <div class="menu-wrapper">
+                <input type="checkbox" id="trend-menu" class="menu-toggle">
+                <!-- 사진 속 트렌드 버튼 모방 -->
+                <label for="trend-menu" class="menu-btn">트렌드</label>
+                
+                <!-- 11. 트렌드 버튼 클릭 시 1~10위 게시물 출력 -->
+                <div class="dropdown-list">
+                    <span class="settings-title">현재 트렌드 게시물 순위</span>
+                    <!-- 조건 6 충족: ol, li 태그 -->
+                    <ol>
+                        <li>최근 발견된 티라노사우루스 깃털 화석</li>
+                        <li>공룡 멸종에 관한 최신 운석 충돌설</li>
+                        <li>스피노사우루스의 수생 생활 증거</li>
+                        <li>쥐라기 시대 식물 생태계 분석</li>
+                        <li>가장 완벽한 트리케라톱스 두골 발굴</li>
+                        <li>조류와 공룡의 진화적 연결고리</li>
+                        <li>메갈로돈과 해양 파충류의 비교</li>
+                        <li>아르헨티노사우루스의 실제 크기 추정</li>
+                        <li>공룡 DNA 복원 가능성에 대한 고찰</li>
+                        <li>최초의 공룡은 언제 나타났을까?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 3. 설정 구역 -->
+            <div class="menu-wrapper">
+                <input type="checkbox" id="settings-menu" class="menu-toggle">
+                <!-- 사진 속 사이트 설정 버튼 모방 -->
+                <label for="settings-menu" class="menu-btn">사이트 설정 및 시대 설정</label>
+                
+                <!-- 12. 사이트 및 시대 설정 메뉴 출력 -->
+                <div class="dropdown-list">
+                    <span class="settings-title">사이트 설정</span>
+                    <div style="margin-bottom: 10px;">
+                        <!-- 최상단에 만들어둔 체크박스 id를 label로 연결하여 작동하게 만듦 -->
+                        <label for="text-zoom-toggle" class="action-label">텍스트 확대 (On/Off)</label>
+                        <label for="dark-mode-toggle" class="action-label">다크 모드 변경 (On/Off)</label>
+                    </div>
+
+                    <span class="settings-title">시대 설정 필터</span>
+                    <!-- 조건 6 충족: ul, li 태그 -->
+                    <ul>
+                        <li><a href="#triassic">트라이아스기 (Triassic)</a></li>
+                        <li><a href="#jurassic">쥐라기 (Jurassic)</a></li>
+                        <li><a href="#cretaceous">백악기 (Cretaceous)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </body>
