@@ -1,162 +1,176 @@
-/* 기본 초기화 및 부드러운 스크롤 */
-html {
-    scroll-behavior: smooth;
+/* 기본 초기화 */
+* {
+    box-sizing: border-box;
 }
 
 body {
-    /* 조건: background-color 사용 */
+    /* 1. background-color 사용 */
     background-color: #ffffff;
     color: #000000;
-    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-    /* 조건: margin, padding 사용 */
+    font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+    /* 2. margin, 3. padding 사용 */
     margin: 0;
-    padding: 30px;
-    /* 조건: display(flex) 사용 */
-    display: flex;
-    justify-content: center;
-}
-
-#app-container {
-    /* 조건: width 사용 */
-    width: 100%;
-    max-width: 700px;
-}
-
-h1 {
-    text-align: center;
-    border-bottom: 2px solid #000000;
-    padding-bottom: 15px;
-    margin-bottom: 10px;
-}
-
-.intro-text {
-    text-align: center;
-    color: #555555;
-    margin-bottom: 30px;
-}
-
-/* 1. 본문 영역 (스크롤 설정) */
-#main-content {
-    /* 조건: border 사용 */
-    border: 3px solid #000000;
-    border-radius: 12px;
-    /* 조건: height 사용 (높이를 제한하여 휠 스크롤 생성) */
-    height: 450px;
-    overflow-y: auto; /* 마우스 휠 상하 이동(스크롤) 구현 */
     padding: 20px;
+    line-height: 1.6;
+}
+
+/* 4. width 사용 */
+#app-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.logo {
+    vertical-align: middle;
+    /* 5. border 사용 */
+    border: 2px solid #000;
+    border-radius: 50%;
+}
+
+/* 1. 본문 영역 (마우스 휠 스크롤 적용) */
+.scroll-area {
+    /* 6. height 사용 */
+    height: 450px;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto; /* 상하 마우스 휠 스크롤 작동 */
     margin-bottom: 30px;
+    background-color: #fcfcfc;
 }
 
-/* 개별 내용 영역 */
-.article-box {
-    margin-bottom: 50px;
+/* 본문 내 스크롤바 디자인 (웹킷 브라우저용 꾸밈) */
+.scroll-area::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 4px;
 }
 
-h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
+/* 2. 내용 영역 */
+.content-item {
+    margin-bottom: 40px;
+}
+
+.content-item h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+    border-left: 4px solid #000;
+    padding-left: 10px;
 }
 
 .summary {
-    font-size: 15px;
+    font-size: 0.85rem;
     font-weight: normal;
-    color: #666666;
-    margin-left: 10px;
+    color: #555555;
+    margin-left: 15px;
 }
 
-.badge {
-    /* 조건: display(inline-block) 사용 */
-    display: inline-block;
-    background-color: #000000;
-    color: #ffffff;
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    vertical-align: middle;
-}
-
-/* 클릭 가능한 이미지 링크 영역 */
-.image-link {
+/* 구상도의 그라데이션 박스 구현 (버튼처럼 작동) */
+.image-placeholder {
     display: block;
+    height: 180px;
     width: 100%;
-    margin-bottom: 15px;
+    /* 구상도와 동일한 위-아래 흑백 그라데이션 */
+    background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
+    border: 1px solid #000000;
+    border-radius: 8px;
+    text-decoration: none;
+    position: relative;
     transition: opacity 0.3s ease;
 }
 
-.image-link:hover {
-    opacity: 0.8;
+.image-placeholder:hover {
+    opacity: 0.85; /* 마우스 오버 시 상호작용 피드백 */
 }
 
-.image-link img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border: 1px solid #cccccc;
-    display: block;
+.click-hint {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
-/* 구상도의 '검은색 그라데이션 박스'를 CSS로 완벽히 구현 */
-.gradient-box {
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
-    border: 1px solid #cccccc;
+/* 5. 사이드 메뉴 영역 */
+.flex-container {
+    /* 7. display(flex) 사용 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #ffffff;
 }
 
-.detail-content {
-    background-color: #f9f9f9;
-    border-left: 4px solid #000000;
-    padding: 15px;
-    margin-top: 10px;
+/* 버튼 공통 스타일 */
+.btn {
+    /* 8. display(inline-block) 사용 */
+    display: inline-block;
+    width: 48%; /* flex 컨테이너 안에서 좌우 나란히 배치 */
+    padding: 16px 0;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
-/* 표(Table) 디자인 설정 */
-table {
+.black-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+}
+
+.black-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* 클릭 시 이동되는 상세 내용 영역 */
+.divider {
+    border: 0;
+    border-top: 2px dashed #000;
+    margin: 50px 0;
+}
+
+.target-section {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+/* 하단 테이블 꾸미기 */
+.table-section {
+    margin-top: 40px;
+}
+
+.styled-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
-th, td {
+.styled-table th, .styled-table td {
     border: 1px solid #000000;
-    padding: 10px;
+    padding: 12px 15px;
     text-align: left;
 }
 
-th {
+.styled-table th {
     background-color: #000000;
     color: #ffffff;
 }
-
-/* 5. 사이드 메뉴 (하단 버튼 구역) */
-#side-menu {
-    border: 3px solid #000000;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.menu-btn {
-    background-color: #000000;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 18px 0;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    flex: 1; /* 두 버튼이 남은 공간을 반반씩 차지하도록 함 */
-    border-radius: 6px;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.menu-btn:hover {
-    background-color: #333333;
-}
-
-.menu-btn:active {
-    transform: scale(0.98);
-}
-
-/* 하단 정보 구역 (버튼 클릭
