@@ -1,128 +1,183 @@
-/* 기본 초기화 및 흑백 테마 설정 */
+/* 
+필수 조건 확인: 
+background-color, border, width, height, margin, padding, display(inline-block, flex) 
+*/
+
+/* 1. 기본 설정 및 흑백 테마 */
 body {
-    font-family: 'Malgun Gothic', sans-serif;
-    background-color: #ffffff;
+    background-color: #f4f4f4; /* 배경과 웹사이트 박스를 구분하기 위한 옅은 회색 */
     color: #000000;
+    font-family: 'Helvetica Neue', 'Malgun Gothic', sans-serif;
     margin: 0;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
+    padding: 30px 10px;
 }
 
-#app-container {
+/* 중앙 정렬되는 전체 웹사이트 틀 */
+#website-wrapper {
     width: 100%;
-    max-width: 800px;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
-/* 1. 본문 영역 박스 형태 */
-.main-section {
+/* 헤더 디자인 */
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    display: flex; /* 필수 조건: flex */
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.logo-img {
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+
+header p {
+    font-size: 0.9em;
+    color: #333;
+}
+
+header span {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+
+/* 2. 상단 메인 박스 (와이어프레임의 본문 영역) */
+.main-panel {
+    background-color: #ffffff;
     border: 2px solid #000000;
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
 }
 
-/* 2. 내용 영역 스크롤 기능 (조건 3 충족) */
-.scroll-area {
-    height: 450px;
-    overflow-y: scroll;
-    padding-right: 15px;
+/* 스크롤 가능한 내부 영역 (필수 조건: 마우스 휠로 상하 이동) */
+.scroll-container {
+    height: 400px; /* 고정 높이 지정 */
+    overflow-y: scroll; /* 스크롤 활성화 */
+    padding-right: 15px; /* 스크롤바와 콘텐츠 사이 여백 */
 }
 
-.content-block {
-    margin-bottom: 25px;
+/* 스크롤바 커스텀 (더 웹사이트다운 느낌) */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 10px;
+}
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #eeeeee;
+    border-radius: 10px;
 }
 
-.summary {
+/* 3. 콘텐츠 디자인 */
+.post {
+    margin-bottom: 35px;
+}
+
+.post h2, .post h3 {
+    margin: 0 0 10px 0;
+}
+
+.sub-text {
     font-size: 0.6em;
-    color: #555555;
-    margin-left: 10px;
+    color: #777777;
+    margin-left: 8px;
     font-weight: normal;
 }
 
-.content-link {
-    display: block;
-    text-decoration: none;
-}
-
-/* 흑백 그라데이션 박스 (조건 2, 4 충족) */
-.gradient-bg {
+/* 사진과 동일한 흑백 그라데이션 박스 */
+.art-frame {
     width: 100%;
     height: 180px;
     background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
     border: 1px solid #000000;
-    transition: opacity 0.2s;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-/* 버튼 작동 시각 효과 (조건 7 충족) */
-.gradient-bg:hover {
-    opacity: 0.7;
-    cursor: pointer;
+.image-link {
+    display: block;
+    text-decoration: none;
 }
 
-.hidden-img {
-    display: none;
+/* 그림 위 마우스 오버 시 효과 (작동하는 느낌) */
+.art-frame:hover {
+    opacity: 0.8;
+    transform: scale(0.99);
 }
 
-.list-area {
-    margin-top: 20px;
+/* 4. 부가 정보 (테이블 및 리스트) */
+.info-section {
     border-top: 1px dashed #000000;
-    padding-top: 15px;
+    padding-top: 20px;
+    margin-top: 10px;
 }
 
-/* 5. 사이드 메뉴 박스 형태 */
-.side-menu {
+.info-section ul, .info-section ol {
+    font-size: 0.9em;
+    color: #222;
+}
+
+/* 테이블 디자인 */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.schedule-table th, .schedule-table td {
+    border: 1px solid #000000;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.schedule-table th {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* 5. 하단 메뉴 박스 (와이어프레임의 트렌드/설정 구역) */
+.nav-panel {
+    background-color: #ffffff;
     border: 2px solid #000000;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-/* Flexbox를 이용한 버튼 배치 (조건 6 충족) */
-.menu-flex-container {
-    display: flex;
+    padding: 15px;
+    display: flex; /* 필수 조건: flex */
     justify-content: space-between;
     gap: 15px;
 }
 
-/* 사이드 메뉴의 검은색 버튼 영역 */
-.btn {
-    display: inline-block; /* inline-block 필수 조건 충족 */
-    width: 48%;
+/* 메뉴 버튼 디자인 */
+.action-btn {
+    display: inline-block; /* 필수 조건: inline-block */
+    width: 48%; /* 두 개가 가로로 적절히 나뉘도록 너비 설정 */
     background-color: #000000;
     color: #ffffff;
     text-align: center;
-    padding: 25px 0;
+    padding: 20px 0;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.1em;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-/* 버튼 작동 시각 효과 (조건 7 충족) */
-.btn:hover {
-    background-color: #333333;
-}
-
-.btn:active {
-    transform: scale(0.98);
-}
-
-/* 하단 구성 해설 테이블 */
-.info-table {
-    width: 100%;
-    border-collapse: collapse;
+    font-size: 1em;
     border: 2px solid #000000;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s; /* 부드러운 전환 효과 */
 }
 
-.info-table th, .info-table td {
-    border: 1px solid #000000;
-    padding: 15px;
-    text-align: left;
+/* 버튼 마우스 오버 및 클릭 시 작동하는 시각적 효과 (필수 조건) */
+.action-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
 }
 
-.info-table th {
-    width: 120px;
-    text-align: center;
-    font-weight: bold;
+.action-btn:active {
+    background-color: #dddddd;
 }
