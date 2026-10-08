@@ -3,58 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웹사이트 과제</title>
+    <title>Noir et Blanc Gallery</title>
+    <!-- CSS 링크 (필수 조건: link) -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app-container">
-        <!-- 1. 본문 영역[cite: 1] -->
-        <div class="main-section">
-            <h1>1. 본문 영역</h1>
-            
-            <!-- 2. 내용 영역 (마우스 휠 스크롤 적용)[cite: 1] -->
-            <div class="scroll-area">
-                <div class="content-block">
-                    <h2>제목 <span class="summary">간략한 요약</span></h2>
-                    <a href="#full-content-1" class="content-link">
-                        <div class="gradient-bg">
-                            <!-- img 태그 필수 조건 충족용 (화면에는 보이지 않음) -->
-                            <img src="dummy1.jpg" alt="첫 번째 콘텐츠 배경 이미지" class="hidden-img">
-                        </div>
+    <!-- 전체 웹사이트 래퍼 (필수 조건: id, div) -->
+    <div id="website-wrapper">
+        
+        <!-- 웹사이트 헤더 (필수 조건: h1, p, span, br, img) -->
+        <header>
+            <h1>
+                <img src="https://via.placeholder.com/30x30/000000/FFFFFF?text=BW" alt="갤러리 로고" class="logo-img">
+                Noir et Blanc Gallery
+            </h1>
+            <p>흑백의 미학을 담은 <span>현대 온라인 사진전</span>입니다.<br>스크롤을 내려 작품을 감상하세요.</p>
+        </header>
+
+        <!-- 와이어프레임의 상단 큰 박스 (본문 영역) -->
+        <div class="main-panel">
+            <!-- 마우스 휠 스크롤이 적용되는 영역 (필수 조건: 마우스 휠 상하 이동) -->
+            <div class="scroll-container">
+                
+                <!-- 첫 번째 콘텐츠 -->
+                <div class="post">
+                    <!-- 필수 조건: h2 -->
+                    <h2>도시의 그림자 <span class="sub-text">2026 가을 컬렉션</span></h2>
+                    <!-- 필수 조건: a -->
+                    <a href="#gallery1" class="image-link">
+                        <div class="art-frame"></div>
                     </a>
                 </div>
                 
-                <br> <!-- br 태그 필수 조건 충족 -->
-
-                <div class="content-block">
-                    <h3>제목 <span class="summary">간략한 요약</span></h3>
-                    <a href="#full-content-2" class="content-link">
-                        <div class="gradient-bg">
-                            <img src="dummy2.jpg" alt="두 번째 콘텐츠 배경 이미지" class="hidden-img">
-                        </div>
+                <!-- 두 번째 콘텐츠 -->
+                <div class="post">
+                    <!-- 필수 조건: h3 -->
+                    <h3>침묵의 바다 <span class="sub-text">자연과 대비</span></h3>
+                    <a href="#gallery2" class="image-link">
+                        <div class="art-frame"></div>
                     </a>
                 </div>
 
-                <!-- ul, ol, li 태그 필수 조건 충족을 위한 부가 정보 영역 -->
-                <div class="list-area">
-                    <p>추가 정보 목록</p>
-                    <ul>
-                        <li>본문 영역의 여러 컨텐츠 중 하나입니다.</li>
-                    </ul>
-                    <ol>
-                        <li>클릭 시 전체 내용을 확인할 수 있습니다.</li>
-                    </ol>
+                <!-- 세 번째 콘텐츠 -->
+                <div class="post">
+                    <h3>빛이 머무는 곳 <span class="sub-text">건축물의 선</span></h3>
+                    <a href="#gallery3" class="image-link">
+                        <div class="art-frame"></div>
+                    </a>
                 </div>
+
+                <!-- 부가 정보 영역 (필수 조건: ul, ol, li, 표 관련 태그 모두 사용) -->
+                <div class="info-section">
+                    <h3>갤러리 관람 안내</h3>
+                    
+                    <p>관람 전 참고사항</p>
+                    <ul>
+                        <li>본 웹사이트는 흑백 모드에 최적화되어 있습니다.</li>
+                        <li>작품 클릭 시 상세 페이지로 이동합니다.</li>
+                    </ul>
+                    
+                    <p>이용 수칙</p>
+                    <ol>
+                        <li>작품의 무단 복제 및 배포를 금지합니다.</li>
+                        <li>모든 작품의 저작권은 작가에게 있습니다.</li>
+                    </ol>
+                    
+                    <!-- 전시 일정 표 -->
+                    <table class="schedule-table">
+                        <tr>
+                            <th>전시 주제</th>
+                            <th>기간</th>
+                        </tr>
+                        <tr>
+                            <td>도시의 그림자 (기획전)</td>
+                            <td>2026.10 ~ 2026.11</td>
+                        </tr>
+                        <tr>
+                            <td>상설 전시</td>
+                            <td>연중무휴</td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
         </div>
 
-        <!-- 5. 사이드 메뉴[cite: 1] -->
-        <div class="side-menu">
-            <h2>5. 사이드 메뉴</h2>
-            <div class="menu-flex-container">
-                <!-- 4. 트렌드 구역[cite: 1] -->
-                <a href="#trend" class="btn">트렌드</a>
-                <!-- 3. 설정 구역[cite: 1] -->
-                <a href="#settings" class="btn">사이트 설정 및 시대 설정</a>
-            </div>
+        <!-- 와이어프레임의 하단 박스 (사이드/설정 메뉴 영역) -->
+        <div class="nav-panel">
+            <!-- 버튼 클릭 시 작동(상호작용)하도록 a 태그 활용 -->
+            <a href="#trending" class="action-btn">트렌드 갤러리</a>
+            <a href="#settings" class="action-btn">사이트 및 시대 설정</a>
         </div>
+
+    </div>
+</body>
+</html>
