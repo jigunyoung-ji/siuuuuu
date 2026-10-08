@@ -3,117 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black & White Archive</title>
-    <!-- CSS 파일 연결 (link 태그 조건 충족) -->
-    <link rel="stylesheet" href="style.css">
+    <title>공룡 지식 보관소</title>
+    <!-- CSS 필수 요소: link를 통한 폰트 로드 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS 필수 요소: 마진, 패딩, 배경색 등 초기화 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 기본 바디 설정 (검은색과 흰색 기반) */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #e9e9e9;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 중앙 정렬을 위한 래퍼 컨테이너 설정 */
+        .main-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+            /* CSS 필수 요소: display (flex) */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 1. 본문 영역 & 2. 내용 영역 (마우스 휠 스크롤 적용) */
+        .content-box {
+            border: 2px solid #000;
+            border-radius: 12px;
+            background-color: #fff;
+            padding: 25px;
+            /* CSS 필수 요소: height, 스크롤 조건 충족 */
+            height: 60vh;
+            overflow-y: scroll;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* 게시물 스타일링 */
+        .post {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed #ccc;
+        }
+        
+        .post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .post h2 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        /* 제목 옆 간략한 요약 (span 활용) */
+        .summary {
+            font-size: 0.55em;
+            color: #666;
+            font-weight: normal;
+            margin-left: 12px;
+            /* CSS 필수 요소: display (inline-block) */
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* 이미지 스타일링 (흑백 톤 유지 및 사진의 그라데이션 박스 느낌 구현) */
+        .post-img {
+            /* CSS 필수 요소: width */
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: linear-gradient(to bottom, #111, #ccc);
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            filter: grayscale(100%);
+        }
+
+        .post-desc {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 표(Table) 스타일링 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        /* 3, 4, 5. 사이드 메뉴(설정 및 트렌드 구역) */
+        .menu-box {
+            border: 2px solid #000;
+            border-radius: 12px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .menu-btn-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            flex: 1;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 18px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+
+        .menu-btn:hover {
+            background-color: #444;
+        }
+
+        /* 숨겨진 체크박스 (기능 작동용) */
+        .hidden-check {
+            display: none;
+        }
+
+        /* 드롭다운 숨김 콘텐츠 */
+        .toggle-content {
+            display: none;
+            padding-top: 25px;
+            margin-top: 20px;
+            border-top: 2px dashed #000;
+        }
+
+        /* HTML/CSS만으로 버튼 클릭 효과 구현 (체크박스 해킹) */
+        #trend-check:checked ~ .trend-content {
+            display: block;
+        }
+        #setting-check:checked ~ .setting-content {
+            display: block;
+        }
+
+        /* 트렌드 리스트 스타일 */
+        .trend-list {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .trend-list a, .era-list a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .trend-list a:hover, .era-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* 설정 버튼들 */
+        .setting-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .action-btn {
+            background-color: #eee;
+            border: 2px solid #000;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .action-btn:hover {
+            background-color: #ddd;
+        }
+
+        .era-list {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+
+        /* ---------------------------------------------------
+           기능 구현 (JavaScript 없이 CSS만으로 설정 적용) 
+           --------------------------------------------------- */
+        
+        /* 텍스트 확대 기능 */
+        #text-large-check:checked ~ .main-wrapper {
+            font-size: 1.25rem;
+        }
+        
+        /* 다크 모드 (배경 검은색으로 변경) 기능 */
+        #dark-mode-check:checked ~ .main-wrapper .content-box,
+        #dark-mode-check:checked ~ .main-wrapper .menu-box {
+            background-color: #1a1a1a;
+            color: #fff;
+            border-color: #555;
+        }
+        #dark-mode-check:checked ~ body {
+            background-color: #000;
+        }
+        #dark-mode-check:checked ~ .main-wrapper .menu-btn {
+            background-color: #fff;
+            color: #000;
+        }
+        #dark-mode-check:checked ~ .main-wrapper .summary {
+            color: #aaa;
+        }
+        #dark-mode-check:checked ~ .main-wrapper th {
+            background-color: #333;
+            color: #fff;
+        }
+        #dark-mode-check:checked ~ .main-wrapper td, 
+        #dark-mode-check:checked ~ .main-wrapper th {
+            border-color: #777;
+        }
+        #dark-mode-check:checked ~ .main-wrapper .trend-list a,
+        #dark-mode-check:checked ~ .main-wrapper .era-list a {
+            color: #4da6ff;
+        }
+        #dark-mode-check:checked ~ .main-wrapper .action-btn {
+            background-color: #333;
+            color: #fff;
+            border-color: #888;
+        }
+    </style>
 </head>
 <body>
-    <div id="app-container">
-        <!-- 메인 헤더 (h1, img(alt 포함), p, br 태그 사용) -->
-        <header>
-            <h1>
-                <img src="https://via.placeholder.com/30/000000/ffffff?text=BW" alt="블랙앤화이트 웹사이트 로고" class="logo"> 
-                The Archive
-            </h1>
-            <p>미니멀리즘을 추구하는 흑백 기반의 단일 페이지 웹사이트입니다.<br>아래 컨텐츠를 클릭하여 상세 내용을 확인하고 트렌드를 탐색해보세요.</p>
-        </header>
 
-        <!-- 1. 본문 영역 (마우스 휠 스크롤 적용 구역) -->
-        <!-- div, id, class 태그 사용 -->
-        <div id="main-content" class="scroll-area">
+    <!-- UI 기능을 담당하는 숨겨진 체크박스 (전역 설정용) -->
+    <input type="checkbox" id="text-large-check" class="hidden-check">
+    <input type="checkbox" id="dark-mode-check" class="hidden-check">
+
+    <div class="main-wrapper">
+        
+        <!-- 1. 본문 영역 & 2. 내용 영역 -->
+        <div class="content-box">
+            <h1 class="header-title">공룡 정보 공유 커뮤니티</h1>
+            <p style="text-align: center;">다양한 고생물들의 놀라운 정보를 탐구해 보세요.</p>
+            <br>
+
+            <!-- 첫 번째 게시물 -->
+            <div class="post" id="trex">
+                <h2>티라노사우루스 <span class="summary">역사상 가장 유명한 폭군 도마뱀</span></h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tyrannosaurus_rex_by_durbed.jpg/800px-Tyrannosaurus_rex_by_durbed.jpg" alt="티라노사우루스의 흑백 복원도" class="post-img">
+                <p class="post-desc">
+                    티라노사우루스는 백악기 후기 북아메리카 대륙에서 서식했던 거대한 수각류 공룡입니다.<br>
+                    강력한 턱힘과 크고 톱니 같은 이빨을 무기로 삼아 당시 생태계의 최상위 포식자로 군림했습니다.
+                </p>
+                <table>
+                    <tr>
+                        <th>분류</th>
+                        <th>시대</th>
+                        <th>식성</th>
+                        <th>몸길이</th>
+                    </tr>
+                    <tr>
+                        <td>용반목 수각류</td>
+                        <td>백악기 후기</td>
+                        <td>육식</td>
+                        <td>약 12~13m</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 두 번째 게시물 -->
+            <div class="post" id="tricera">
+                <h2>트리케라톱스 <span class="summary">세 개의 뿔을 가진 초식 공룡</span></h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Triceratops_illustration.jpg/800px-Triceratops_illustration.jpg" alt="트리케라톱스의 흑백 복원도" class="post-img">
+                <p class="post-desc">
+                    트리케라톱스는 거대한 프릴과 얼굴에 난 세 개의 뿔이 특징인 각룡류 공룡입니다.<br>
+                    이 뿔과 프릴은 방어용 무기이면서 동시에 동족 간의 과시용으로 쓰였을 것으로 추정됩니다.
+                </p>
+                <table>
+                    <tr>
+                        <th>분류</th>
+                        <th>시대</th>
+                        <th>식성</th>
+                        <th>몸길이</th>
+                    </tr>
+                    <tr>
+                        <td>조반목 각룡류</td>
+                        <td>백악기 후기</td>
+                        <td>초식</td>
+                        <td>약 8~9m</td>
+                    </tr>
+                </table>
+            </div>
             
-            <!-- 2. 내용 영역 1 -->
-            <div class="content-item">
-                <!-- h2, span 태그 사용 -->
-                <h2>웹 디자인 트렌드 <span class="summary">흑백의 조화와 여백의 미</span></h2>
-                <!-- a 태그를 이용해 클릭 시 작동하는 버튼/이미지 역할 수행 -->
-                <a href="#detail-section-1" class="image-placeholder">
-                    <span class="click-hint">클릭하여 전체 내용 보기</span>
-                </a>
+            <!-- 세 번째 게시물 -->
+            <div class="post" id="brachio">
+                <h2>브라키오사우루스 <span class="summary">하늘을 찌를 듯한 거대한 목</span></h2>
+                <!-- 임시 플레이스홀더 이미지 (이미지 로드 실패시에도 흑백 그라데이션 적용됨) -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Brachiosaurus_DB.jpg/800px-Brachiosaurus_DB.jpg" alt="브라키오사우루스의 흑백 복원도" class="post-img">
+                <p class="post-desc">
+                    앞다리가 뒷다리보다 길어 등이 뒤쪽으로 경사진 독특한 체형을 가진 용각류입니다.<br>
+                    높은 나무의 잎을 먹기 유리한 구조를 띠고 있었습니다.
+                </p>
+                <table>
+                    <tr>
+                        <th>분류</th>
+                        <th>시대</th>
+                        <th>식성</th>
+                        <th>몸길이</th>
+                    </tr>
+                    <tr>
+                        <td>용반목 용각류</td>
+                        <td>쥐라기 후기</td>
+                        <td>초식</td>
+                        <td>약 26~30m</td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- 2. 내용 영역 2 -->
-            <div class="content-item">
-                <h2>프론트엔드 구조 <span class="summary">순수 HTML/CSS 구현 기법</span></h2>
-                <a href="#detail-section-2" class="image-placeholder">
-                    <span class="click-hint">클릭하여 전체 내용 보기</span>
-                </a>
+        </div>
+
+        <!-- 3, 4, 5. 사이드 메뉴 영역 (하단 배치) -->
+        <div class="menu-box">
+            <!-- 하단 메뉴 제어용 숨겨진 체크박스 -->
+            <input type="checkbox" id="trend-check" class="hidden-check">
+            <input type="checkbox" id="setting-check" class="hidden-check">
+
+            <div class="menu-btn-container">
+                <!-- 트렌드 구역 버튼 -->
+                <label for="trend-check" class="menu-btn">트렌드</label>
+                <!-- 설정 구역 버튼 -->
+                <label for="setting-check" class="menu-btn">사이트 설정 및 시대 설정</label>
             </div>
 
-            <!-- 스크롤을 시연하기 위한 추가 내용 영역 -->
-            <div class="content-item">
-                <h2>접근성과 시맨틱 <span class="summary">웹 표준 준수하기</span></h2>
-                <a href="#detail-section-3" class="image-placeholder">
-                    <span class="click-hint">클릭하여 전체 내용 보기</span>
-                </a>
+            <!-- 트렌드 버튼 클릭 시 나타나는 구역 -->
+            <div class="trend-content toggle-content">
+                <h3>🔥 현재 트렌드 게시물 (1위 ~ 10위)</h3>
+                <br>
+                <ol class="trend-list">
+                    <li><a href="#trex">티라노사우루스의 치악력에 대한 새로운 논문 (조회수 급상승)</a></li>
+                    <li><a href="#tricera">트리케라톱스의 프릴은 정말 방어용이었을까?</a></li>
+                    <li><a href="#brachio">쥐라기 초식공룡들의 하루 식사량 분석</a></li>
+                    <li><a href="#">안킬로사우루스의 꼬리 곤봉 타격력 연구</a></li>
+                    <li><a href="#">벨로키랍토르 깃털 화석 발견의 의의</a></li>
+                    <li><a href="#">스피노사우루스: 육식인가 수생 포식자인가?</a></li>
+                    <li><a href="#">익룡은 공룡이 아니다? 팩트 체크 및 분류법</a></li>
+                    <li><a href="#">스테고사우루스 골판의 온도 조절 기능성에 관하여</a></li>
+                    <li><a href="#">코엘로피시스와 초기 트라이아스기 생태계</a></li>
+                    <li><a href="#">화석 발굴 현장에서 새로 발견된 미지의 발자국</a></li>
+                </ol>
             </div>
-        </div>
 
-        <!-- 5. 사이드 메뉴 (구상도 하단 메뉴 부분, 3. 설정 구역 & 4. 트렌드 구역) -->
-        <div id="side-menu" class="flex-container">
-            <!-- 4. 트렌드 구역 버튼 -->
-            <a href="#trend-board" class="btn black-btn">트렌드</a>
-            <!-- 3. 설정 구역 버튼 -->
-            <a href="#settings-board" class="btn black-btn">사이트 설정 및 시대 설정</a>
-        </div>
-
-        <!-- ================= 아래는 버튼 클릭 시 이동하는 실제 상세 내용 영역 ================= -->
-        <hr class="divider">
-
-        <div id="detail-section-1" class="target-section">
-            <!-- h3 태그 사용 -->
-            <h3>[본문 전체 내용] 웹 디자인 트렌드</h3>
-            <p>흑백 테마는 사용자에게 시각적인 편안함을 주며 콘텐츠 자체에 집중할 수 있게 만듭니다. 구상도의 그라데이션 박스는 디자인의 깊이를 더해줍니다.</p>
-        </div>
-
-        <div id="detail-section-2" class="target-section">
-            <h3>[본문 전체 내용] 프론트엔드 구조</h3>
-            <p>자바스크립트 없이 <code>&lt;a&gt;</code> 태그의 해시(#) 이동을 통해 단일 페이지(SPA)처럼 동작하게 만들 수 있습니다.</p>
-        </div>
-
-        <div id="trend-board" class="target-section">
-            <h3>🔥 실시간 트렌드</h3>
-            <!-- ol, li 태그 사용 -->
-            <ol>
-                <li>순수 HTML/CSS 렌더링 최적화</li>
-                <li>접근성 높은 블랙 앤 화이트 UI</li>
-                <li>단일 페이지 앵커 스크롤링 기법</li>
-            </ol>
-        </div>
-
-        <div id="settings-board" class="target-section">
-            <h3>⚙️ 사이트 및 시대 설정</h3>
-            <!-- ul, li 태그 사용 -->
-            <ul>
-                <li>사용자 테마: 다크/라이트 고대비 (현재 흑백 고정)</li>
-                <li>시대 배경: 2026년 최신 웹 표준 적용됨</li>
-                <li>폰트 렌더링: 가독성 우선 모드</li>
-            </ul>
-        </div>
-
-        <!-- 표(table, tr, th, td) 태그 사용 -->
-        <div class="table-section">
-            <h3>구성 해설 (참고사항)</h3>
-            <table class="styled-table">
-                <tr>
-                    <th>항목</th>
-                    <th>상세 설명</th>
-                </tr>
-                <tr>
-                    <td>본문 영역</td>
-                    <td>여러 컨텐츠가 나열된 영역이며, <strong>마우스 휠로 상하 스크롤</strong>이 가능합니다.</td>
-                </tr>
-                <tr>
-                    <td>내용 영역</td>
-                    <td>전체 내용 중 일부만 본문 영역에 표시되며, 클릭 시 하단 전체 내용으로 이동합니다.</td>
-                </tr>
-                <tr>
-                    <td>사이드 메뉴</td>
-                    <td>트렌드와 설정 구역 버튼을 품은 영역입니다. (Flexbox 사용)</td>
-                </tr>
-            </table>
+            <!-- 사이트 설정 및 시대 설정 버튼 클릭 시 나타나는 구역 -->
+            <div class="setting-content toggle-content">
+                <h3>⚙️ 사이트 설정</h3>
+                <br>
+                <div class="setting-actions">
+                    <!-- 전역 체크박스를 제어하여 JS 없이 기능 구현 -->
+                    <label for="text-large-check" class="action-btn">텍스트 확대 / 축소 토글</label>
+                    <label for="dark-mode-check" class="action-btn">배경 검은색으로 변경 (다크 모드)</label>
+                </div>
+                
+                <br>
+                <h3>⏳ 시대 설정 (게시판 필터링)</h3>
+                <br>
+                <ul class="era-list">
+                    <li><a href="#">트라이아스기 (Triassic Period) 생물 보기</a></li>
+                    <li><a href="#">쥐라기 (Jurassic Period) 생물 보기</a></li>
+                    <li><a href="#">백악기 (Cretaceous Period) 생물 보기</a></li>
+                </ul>
+            </div>
         </div>
 
     </div>
+
 </body>
 </html>
