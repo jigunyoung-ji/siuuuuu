@@ -3,96 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noir et Blanc Gallery</title>
-    <!-- CSS 링크 (필수 조건: link) -->
+    <title>MONO JOURNAL</title>
+    <!-- CSS 파일 연결 (조건: link 태그 사용) -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 전체 웹사이트 래퍼 (필수 조건: id, div) -->
-    <div id="website-wrapper">
-        
-        <!-- 웹사이트 헤더 (필수 조건: h1, p, span, br, img) -->
-        <header>
-            <h1>
-                <img src="https://via.placeholder.com/30x30/000000/FFFFFF?text=BW" alt="갤러리 로고" class="logo-img">
-                Noir et Blanc Gallery
-            </h1>
-            <p>흑백의 미학을 담은 <span>현대 온라인 사진전</span>입니다.<br>스크롤을 내려 작품을 감상하세요.</p>
-        </header>
+    <div id="app-container">
+        <!-- 조건: h1 사용 -->
+        <h1>MONO JOURNAL</h1>
+        <p class="intro-text">
+            미니멀리즘 웹 트렌드를 다루는 모노톤 웹 매거진입니다.<br><!-- 조건: p, br 사용 -->
+            아래 본문 영역을 마우스 휠로 스크롤하여 더 많은 기사를 확인하세요.
+        </p>
 
-        <!-- 와이어프레임의 상단 큰 박스 (본문 영역) -->
-        <div class="main-panel">
-            <!-- 마우스 휠 스크롤이 적용되는 영역 (필수 조건: 마우스 휠 상하 이동) -->
-            <div class="scroll-container">
+        <!-- 1. 본문 영역 (마우스 휠 스크롤 가능) -->
+        <!-- 조건: id, class, div 사용 -->
+        <div id="main-content" class="scroll-area">
+            
+            <!-- 내용 영역 1 -->
+            <div class="article-box">
+                <!-- 조건: h2, span 사용 -->
+                <h2>웹 접근성의 이해 <span class="summary">모두를 위한 웹 디자인</span> <span class="badge">NEW</span></h2>
                 
-                <!-- 첫 번째 콘텐츠 -->
-                <div class="post">
-                    <!-- 필수 조건: h2 -->
-                    <h2>도시의 그림자 <span class="sub-text">2026 가을 컬렉션</span></h2>
-                    <!-- 필수 조건: a -->
-                    <a href="#gallery1" class="image-link">
-                        <div class="art-frame"></div>
-                    </a>
-                </div>
+                <!-- 2. 클릭 시 전체 내용 확인 (작동하는 버튼/링크) -->
+                <!-- 조건: a, img(alt 포함) 사용 -->
+                <a href="#section-accessibility" class="image-link">
+                    <!-- 구상도의 검은색 그라데이션 이미지를 대체하는 실제 이미지 -->
+                    <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="웹 접근성 관련 흑백 책상 이미지">
+                </a>
                 
-                <!-- 두 번째 콘텐츠 -->
-                <div class="post">
-                    <!-- 필수 조건: h3 -->
-                    <h3>침묵의 바다 <span class="sub-text">자연과 대비</span></h3>
-                    <a href="#gallery2" class="image-link">
-                        <div class="art-frame"></div>
-                    </a>
-                </div>
-
-                <!-- 세 번째 콘텐츠 -->
-                <div class="post">
-                    <h3>빛이 머무는 곳 <span class="sub-text">건축물의 선</span></h3>
-                    <a href="#gallery3" class="image-link">
-                        <div class="art-frame"></div>
-                    </a>
-                </div>
-
-                <!-- 부가 정보 영역 (필수 조건: ul, ol, li, 표 관련 태그 모두 사용) -->
-                <div class="info-section">
-                    <h3>갤러리 관람 안내</h3>
-                    
-                    <p>관람 전 참고사항</p>
+                <!-- 클릭 시 이동될 상세 내용 구역 -->
+                <div id="section-accessibility" class="detail-content">
+                    <!-- 조건: h3, ul, li 사용 -->
+                    <h3>접근성 핵심 가이드</h3>
                     <ul>
-                        <li>본 웹사이트는 흑백 모드에 최적화되어 있습니다.</li>
-                        <li>작품 클릭 시 상세 페이지로 이동합니다.</li>
+                        <li>시각 장애인을 위한 이미지 대체 텍스트(alt) 제공</li>
+                        <li>마우스 없이 키보드만으로 탐색 가능한 구조</li>
                     </ul>
-                    
-                    <p>이용 수칙</p>
+                </div>
+            </div>
+
+            <!-- 내용 영역 2 -->
+            <div class="article-box">
+                <h2>블랙 앤 화이트 UI <span class="summary">색상 배제의 미학</span></h2>
+                <a href="#section-ui" class="image-link">
+                    <!-- CSS 그라데이션을 적용한 빈 div를 이미지처럼 활용 -->
+                    <div class="gradient-box"></div>
+                </a>
+                
+                <div id="section-ui" class="detail-content">
+                    <h3>UI 디자인 원칙</h3>
+                    <!-- 조건: ol, li 사용 -->
                     <ol>
-                        <li>작품의 무단 복제 및 배포를 금지합니다.</li>
-                        <li>모든 작품의 저작권은 작가에게 있습니다.</li>
+                        <li>여백(Margin, Padding)을 통한 공간감 확보</li>
+                        <li>타이포그래피의 크기와 굵기로 계층 구조 형성</li>
                     </ol>
-                    
-                    <!-- 전시 일정 표 -->
-                    <table class="schedule-table">
+                </div>
+            </div>
+
+            <!-- 내용 영역 3 (테이블 포함) -->
+            <div class="article-box">
+                <h2>사이트 업데이트 내역 <span class="summary">버전 정보</span></h2>
+                <a href="#section-update" class="image-link">
+                    <div class="gradient-box"></div>
+                </a>
+                
+                <div id="section-update" class="detail-content">
+                    <h3>릴리스 노트</h3>
+                    <!-- 조건: 표(table, tr, th, td) 사용 -->
+                    <table>
                         <tr>
-                            <th>전시 주제</th>
-                            <th>기간</th>
+                            <th>버전 (Version)</th>
+                            <th>업데이트 날짜</th>
+                            <th>주요 변경 사항</th>
                         </tr>
                         <tr>
-                            <td>도시의 그림자 (기획전)</td>
-                            <td>2026.10 ~ 2026.11</td>
+                            <td>v1.0.0</td>
+                            <td>2023.10.01</td>
+                            <td>초기 레이아웃 및 흑백 테마 구축</td>
                         </tr>
                         <tr>
-                            <td>상설 전시</td>
-                            <td>연중무휴</td>
+                            <td>v1.1.0</td>
+                            <td>2023.10.15</td>
+                            <td>본문 스크롤 기능 및 네비게이션 추가</td>
                         </tr>
                     </table>
                 </div>
-
             </div>
+
+        </div> <!-- 본문 영역 끝 -->
+
+        <!-- 5. 사이드 메뉴 (트렌드 및 설정 구역) -->
+        <div id="side-menu">
+            <!-- 4. 트렌드 구역 (버튼) -->
+            <a href="#trend-info" class="menu-btn">트렌드 확인</a>
+            <!-- 3. 설정 구역 (버튼) -->
+            <a href="#settings-info" class="menu-btn">사이트 설정 및 시대 설정</a>
         </div>
 
-        <!-- 와이어프레임의 하단 박스 (사이드/설정 메뉴 영역) -->
-        <div class="nav-panel">
-            <!-- 버튼 클릭 시 작동(상호작용)하도록 a 태그 활용 -->
-            <a href="#trending" class="action-btn">트렌드 갤러리</a>
-            <a href="#settings" class="action-btn">사이트 및 시대 설정</a>
+        <!-- 버튼 클릭 시 스크롤되어 보여질 하단 정보 구역 -->
+        <div id="trend-info" class="footer-info">
+            <h3>현재 트렌드: 미니멀리즘</h3>
+            <p>복잡한 색상을 배제하고 정보 전달에 집중하는 흑백 디자인이 강세입니다.</p>
+        </div>
+        <div id="settings-info" class="footer-info">
+            <h3>환경 설정</h3>
+            <p>다크 모드, 시대별 레이아웃 테마(90s 클래식, 모던)를 지원할 예정입니다.</p>
         </div>
 
     </div>
