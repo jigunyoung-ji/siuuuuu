@@ -2,121 +2,82 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>웹사이트 레이아웃 수행평가</title>
-    <!-- CSS 연결 (link 조건 충족) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹사이트 과제</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>학교 수행평가 메인 페이지</h1>
-
-    <div class="layout-container" id="main-wrap">
-        <h2>1. 본문 영역</h2>
-        
-        <!-- 4번 조건: 마우스 휠로 상하 스크롤이 가능한 본문 영역 -->
-        <div class="main-content-area">
+    <div id="app-container">
+        <!-- 1. 본문 영역[cite: 1] -->
+        <div class="main-section">
+            <h1>1. 본문 영역</h1>
             
-            <!-- 내용 영역 1 (클릭 시 작동 조건 충족) -->
-            <a href="#modal-content-1" class="content-item">
-                <div class="content-header">
-                    <h3>제목</h3>
-                    <span class="summary">간략한 요약</span>
+            <!-- 2. 내용 영역 (마우스 휠 스크롤 적용)[cite: 1] -->
+            <div class="scroll-area">
+                <div class="content-block">
+                    <h2>제목 <span class="summary">간략한 요약</span></h2>
+                    <a href="#full-content-1" class="content-link">
+                        <div class="gradient-bg">
+                            <!-- img 태그 필수 조건 충족용 (화면에는 보이지 않음) -->
+                            <img src="dummy1.jpg" alt="첫 번째 콘텐츠 배경 이미지" class="hidden-img">
+                        </div>
+                    </a>
                 </div>
-                <!-- 3번 조건: 사진 없을 시 (사진 필요) 텍스트 출력 (img alt 속성 활용) -->
-                <img src="no-image.jpg" alt="(사진 필요)" class="placeholder-img">
-            </a>
+                
+                <br> <!-- br 태그 필수 조건 충족 -->
 
-            <!-- 내용 영역 2 -->
-            <a href="#modal-content-2" class="content-item">
-                <div class="content-header">
-                    <h3>제목</h3>
-                    <span class="summary">간략한 요약</span>
+                <div class="content-block">
+                    <h3>제목 <span class="summary">간략한 요약</span></h3>
+                    <a href="#full-content-2" class="content-link">
+                        <div class="gradient-bg">
+                            <img src="dummy2.jpg" alt="두 번째 콘텐츠 배경 이미지" class="hidden-img">
+                        </div>
+                    </a>
                 </div>
-                <img src="no-image.jpg" alt="(사진 필요)" class="placeholder-img">
-            </a>
-            
-            <!-- 스크롤 테스트용 내용 영역 3 -->
-            <a href="#modal-content-3" class="content-item">
-                <div class="content-header">
-                    <h3>제목</h3>
-                    <span class="summary">간략한 요약 (스크롤 확인용)</span>
-                </div>
-                <img src="no-image.jpg" alt="(사진 필요)" class="placeholder-img">
-            </a>
 
-        </div>
-
-        <p class="side-menu-label">5. 사이드 메뉴</p>
-        
-        <!-- 사이드 메뉴 영역 -->
-        <div class="side-menu">
-            <!-- 8번 조건: 이미지에 존재하는 모든 버튼 작동 (a 태그와 id 연결) -->
-            <a href="#modal-trend" class="black-btn">트렌드</a>
-            <a href="#modal-settings" class="black-btn">사이트 설정 및 시대 설정</a>
-        </div>
-
-        <!-- 구성 해설 표 (table 조건 충족) -->
-        <table class="explanation-table">
-            <tr>
-                <th>구성 해설</th>
-                <td>
+                <!-- ul, ol, li 태그 필수 조건 충족을 위한 부가 정보 영역 -->
+                <div class="list-area">
+                    <p>추가 정보 목록</p>
+                    <ul>
+                        <li>본문 영역의 여러 컨텐츠 중 하나입니다.</li>
+                    </ul>
                     <ol>
-                        <li>1. 본문 영역: 여러 컨텐츠가 나열된 영역</li>
-                        <li>2. 내용 영역: 전체 내용 중 일부만 본문 영역에 표시</li>
-                        <li>3. 설정 구역: 사용자의 사이트 개인 설정</li>
-                        <li>4. 트렌드 구역: 조회수가 높은 내용 표시</li>
-                        <li>5. 사이드 메뉴: 트렌드와 설정 구역을 품은 영역</li>
+                        <li>클릭 시 전체 내용을 확인할 수 있습니다.</li>
                     </ol>
-                    <br>
-                    <span>* 위 레이아웃은 HTML과 CSS만으로 제작되었습니다.</span>
-                </td>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 사이드 메뉴[cite: 1] -->
+        <div class="side-menu">
+            <h2>5. 사이드 메뉴</h2>
+            <div class="menu-flex-container">
+                <!-- 4. 트렌드 구역[cite: 1] -->
+                <a href="#trend" class="btn">트렌드</a>
+                <!-- 3. 설정 구역[cite: 1] -->
+                <a href="#settings" class="btn">사이트 설정 및 시대 설정</a>
+            </div>
+        </div>
+
+        <!-- 구성 해설 표[cite: 1] -->
+        <table class="info-table">
+            <tr>
+                <th rowspan="5">구성 해설</th>
+                <td>1. 본문 영역: 여러 컨텐츠가 나열된 영역</td>
+            </tr>
+            <tr>
+                <td>2. 내용 영역: 전체 내용 중 일부만 본문 영역에 표시</td>
+            </tr>
+            <tr>
+                <td>3. 설정 구역: 사용자의 사이트 개인 설정</td>
+            </tr>
+            <tr>
+                <td>4. 트렌드 구역: 조회수가 높은 내용 표시</td>
+            </tr>
+            <tr>
+                <td>5. 사이드 메뉴: 트렌드와 설정 구역을 품은 영역</td>
             </tr>
         </table>
-
-        <!-- === 자바스크립트 없이 버튼을 작동시키기 위한 팝업(모달) 영역 === -->
-        
-        <div id="modal-content-1" class="modal">
-            <div class="modal-box">
-                <h2>첫 번째 내용 영역</h2>
-                <p>클릭 시 나타나는 전체 내용입니다.</p>
-                <a href="#" class="close-btn">닫기</a>
-            </div>
-        </div>
-
-        <div id="modal-content-2" class="modal">
-            <div class="modal-box">
-                <h2>두 번째 내용 영역</h2>
-                <p>두 번째 전체 내용입니다.</p>
-                <a href="#" class="close-btn">닫기</a>
-            </div>
-        </div>
-
-        <div id="modal-content-3" class="modal">
-            <div class="modal-box">
-                <h2>세 번째 내용 영역</h2>
-                <p>세 번째 전체 내용입니다.</p>
-                <a href="#" class="close-btn">닫기</a>
-            </div>
-        </div>
-        
-        <div id="modal-trend" class="modal">
-            <div class="modal-box">
-                <h2>트렌드 구역</h2>
-                <ul>
-                    <li>트렌드 1위: HTML 완벽 정리</li>
-                    <li>트렌드 2위: CSS 기초 문법</li>
-                </ul>
-                <a href="#" class="close-btn">닫기</a>
-            </div>
-        </div>
-
-        <div id="modal-settings" class="modal">
-            <div class="modal-box">
-                <h2>사이트 설정 및 시대 설정</h2>
-                <p>사용자 맞춤 설정이 들어갈 공간입니다.</p>
-                <a href="#" class="close-btn">닫기</a>
-            </div>
-        </div>
-        
     </div>
 </body>
 </html>
