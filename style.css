@@ -1,0 +1,128 @@
+/* 기본 초기화 및 흑백 테마 설정 */
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#app-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* 1. 본문 영역 박스 형태 */
+.main-section {
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* 2. 내용 영역 스크롤 기능 (조건 3 충족) */
+.scroll-area {
+    height: 450px;
+    overflow-y: scroll;
+    padding-right: 15px;
+}
+
+.content-block {
+    margin-bottom: 25px;
+}
+
+.summary {
+    font-size: 0.6em;
+    color: #555555;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.content-link {
+    display: block;
+    text-decoration: none;
+}
+
+/* 흑백 그라데이션 박스 (조건 2, 4 충족) */
+.gradient-bg {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
+    border: 1px solid #000000;
+    transition: opacity 0.2s;
+}
+
+/* 버튼 작동 시각 효과 (조건 7 충족) */
+.gradient-bg:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.hidden-img {
+    display: none;
+}
+
+.list-area {
+    margin-top: 20px;
+    border-top: 1px dashed #000000;
+    padding-top: 15px;
+}
+
+/* 5. 사이드 메뉴 박스 형태 */
+.side-menu {
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Flexbox를 이용한 버튼 배치 (조건 6 충족) */
+.menu-flex-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* 사이드 메뉴의 검은색 버튼 영역 */
+.btn {
+    display: inline-block; /* inline-block 필수 조건 충족 */
+    width: 48%;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 25px 0;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 버튼 작동 시각 효과 (조건 7 충족) */
+.btn:hover {
+    background-color: #333333;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* 하단 구성 해설 테이블 */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #000000;
+}
+
+.info-table th, .info-table td {
+    border: 1px solid #000000;
+    padding: 15px;
+    text-align: left;
+}
+
+.info-table th {
+    width: 120px;
+    text-align: center;
+    font-weight: bold;
+}
