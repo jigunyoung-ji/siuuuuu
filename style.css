@@ -1,176 +1,264 @@
-/* 기본 초기화 */
-* {
-    box-sizing: border-box;
-}
-
+/* 기본 리셋 및 폰트 설정 */
 body {
-    /* 1. background-color 사용 */
-    background-color: #ffffff;
-    color: #000000;
-    font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
-    /* 2. margin, 3. padding 사용 */
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f0f0f0; /* 배경 회색톤 지정 */
     margin: 0;
-    padding: 20px;
-    line-height: 1.6;
-}
-
-/* 4. width 사용 */
-#app-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-header {
-    margin-bottom: 20px;
-}
-
-.logo {
-    vertical-align: middle;
-    /* 5. border 사용 */
-    border: 2px solid #000;
-    border-radius: 50%;
-}
-
-/* 1. 본문 영역 (마우스 휠 스크롤 적용) */
-.scroll-area {
-    /* 6. height 사용 */
-    height: 450px;
-    border: 2px solid #000000;
-    border-radius: 12px;
-    padding: 20px;
-    overflow-y: auto; /* 상하 마우스 휠 스크롤 작동 */
-    margin-bottom: 30px;
-    background-color: #fcfcfc;
-}
-
-/* 본문 내 스크롤바 디자인 (웹킷 브라우저용 꾸밈) */
-.scroll-area::-webkit-scrollbar {
-    width: 8px;
-}
-.scroll-area::-webkit-scrollbar-thumb {
-    background-color: #000000;
-    border-radius: 4px;
-}
-
-/* 2. 내용 영역 */
-.content-item {
-    margin-bottom: 40px;
-}
-
-.content-item h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.25rem;
-    border-left: 4px solid #000;
-    padding-left: 10px;
-}
-
-.summary {
-    font-size: 0.85rem;
-    font-weight: normal;
-    color: #555555;
-    margin-left: 15px;
-}
-
-/* 구상도의 그라데이션 박스 구현 (버튼처럼 작동) */
-.image-placeholder {
-    display: block;
-    height: 180px;
-    width: 100%;
-    /* 구상도와 동일한 위-아래 흑백 그라데이션 */
-    background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
-    border: 1px solid #000000;
-    border-radius: 8px;
-    text-decoration: none;
-    position: relative;
-    transition: opacity 0.3s ease;
-}
-
-.image-placeholder:hover {
-    opacity: 0.85; /* 마우스 오버 시 상호작용 피드백 */
-}
-
-.click-hint {
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-    color: #000000;
-    font-weight: bold;
-    font-size: 0.9rem;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-/* 5. 사이드 메뉴 영역 */
-.flex-container {
-    /* 7. display(flex) 사용 */
-    display: flex;
-    justify-content: space-between;
+    padding: 0;
+    display: flex; /* 조건 6 충족: display flex */
+    justify-content: center;
     align-items: center;
-    border: 2px solid #000000;
-    border-radius: 12px;
-    padding: 20px;
-    background-color: #ffffff;
-}
-
-/* 버튼 공통 스타일 */
-.btn {
-    /* 8. display(inline-block) 사용 */
-    display: inline-block;
-    width: 48%; /* flex 컨테이너 안에서 좌우 나란히 배치 */
-    padding: 16px 0;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
+    min-height: 100vh;
     transition: all 0.3s ease;
 }
 
-.black-btn {
-    background-color: #000000;
+/* 
+ * [기능 구현] JS 없는 버튼 작동을 위한 글로벌 상태 체크박스 (숨김 처리) 
+ * 다크모드와 텍스트 확대를 제어합니다.
+ */
+#dark-mode-toggle, #text-zoom-toggle {
+    display: none;
+}
+
+/* 다크모드 활성화 시 CSS 변경 */
+#dark-mode-toggle:checked ~ .app-wrapper {
+    background-color: #1a1a1a;
     color: #ffffff;
-    border: 2px solid #000000;
+}
+#dark-mode-toggle:checked ~ .app-wrapper .content-area,
+#dark-mode-toggle:checked ~ .app-wrapper .bottom-menu,
+#dark-mode-toggle:checked ~ .app-wrapper .dropdown-list {
+    background-color: #2a2a2a;
+    border-color: #555;
+    color: #fff;
+}
+#dark-mode-toggle:checked ~ .app-wrapper table th {
+    background-color: #444;
+    color: #fff;
+}
+#dark-mode-toggle:checked ~ .app-wrapper a {
+    color: #8ab4f8; /* 어두운 배경에 맞는 링크 색상 */
 }
 
-.black-btn:hover {
+/* 텍스트 확대 활성화 시 CSS 변경 */
+#text-zoom-toggle:checked ~ .app-wrapper {
+    font-size: 1.15em;
+}
+
+/* 메인 컨테이너 */
+.app-wrapper {
+    width: 800px; /* 조건 6 충족: width */
+    max-width: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     background-color: #ffffff;
-    color: #000000;
+    padding: 20px; /* 조건 6 충족: padding */
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* 클릭 시 이동되는 상세 내용 영역 */
-.divider {
-    border: 0;
-    border-top: 2px dashed #000;
-    margin: 50px 0;
-}
-
-.target-section {
+/* 1. 본문 영역 (마우스 휠 스크롤 가능) */
+.content-area {
+    border: 2px solid #000000; /* 조건 6 충족: border */
+    border-radius: 10px;
+    height: 500px; /* 조건 6 충족: height */
+    overflow-y: auto; /* 마우스 휠을 이용한 상하 스크롤 */
     padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #e0e0e0;
+    background-color: #ffffff; /* 조건 6 충족: background-color */
+}
+
+/* 게시글(post) 스타일 */
+.post {
+    margin-bottom: 40px; /* 조건 6 충족: margin */
+}
+
+.post-header {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+/* 조건 6 충족: h1~h3 중 h2, h3 / span / display inline-block */
+.post-header h2, .post-header h3 {
+    display: inline-block; 
+    margin: 0 10px 0 0;
+    color: inherit;
+}
+
+.post-header span {
+    display: inline-block;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* 2. 내용 영역 (클릭 시 전체 내용) */
+.content-toggle { display: none; }
+ 
+.gradient-box {
+    display: block;
+    height: 120px;
+    /* 흑백 기반의 그라데이션 박스 디자인 (사진 속 모습 구현) */
+    background: linear-gradient(to bottom, #111111, #ffffff);
     border-radius: 8px;
-    background-color: #fafafa;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    position: relative;
+    transition: opacity 0.2s;
 }
 
-/* 하단 테이블 꾸미기 */
-.table-section {
-    margin-top: 40px;
+.gradient-box:hover { opacity: 0.8; }
+.gradient-box::after {
+    content: "클릭 시 전체 내용 보기";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000;
+    font-weight: bold;
+    text-shadow: 0 0 5px #fff;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.gradient-box:hover::after { opacity: 1; }
+
+/* 체크박스가 선택되면 그라데이션 상자는 숨기고 실제 내용을 보여줌 */
+.content-toggle:checked + .gradient-box { display: none; }
+.content-toggle:checked ~ .full-content { display: block; }
+
+/* 실제 내용 (처음엔 숨겨짐) */
+.full-content {
+    display: none;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    animation: fadeIn 0.4s;
+}
+ 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.styled-table {
+/* 5. 사이드 메뉴(구상도 상단/하단 메뉴 영역) 컨테이너 */
+.bottom-menu {
+    display: flex;
+    gap: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+}
+
+/* 트렌드 구역 및 설정 구역 (드롭다운을 위한 래퍼) */
+.menu-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+/* 흑백 기반 버튼 (사진 속 검은 바탕에 흰 글씨) */
+.menu-btn {
+    display: block;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.menu-btn:hover { background-color: #333; }
+
+.menu-toggle { display: none; }
+
+/* 드롭다운 리스트 (사진 요구사항: 버튼 아래로 내용물이 나오게 할 것) */
+.dropdown-list {
+    display: none; /* 평소엔 숨김 */
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    z-index: 10;
+    padding: 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* 버튼을 누르면(체크되면) 아래 드롭다운 표시 */
+.menu-toggle:checked ~ .dropdown-list {
+    display: block;
+}
+
+/* 리스트 스타일 (ol, ul, li) */
+.dropdown-list ol, .dropdown-list ul {
+    margin: 0;
+    padding-left: 20px;
+}
+.dropdown-list li {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+.dropdown-list li:last-child { margin-bottom: 0; }
+ 
+.settings-title {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+    margin-top: 15px;
+}
+.settings-title:first-child { margin-top: 0; }
+
+/* 설정 변경용 버튼 디자인 (라벨을 버튼처럼) */
+.action-label {
+    display: inline-block;
+    background-color: #eee;
+    color: #000;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 0.85em;
+    cursor: pointer;
+}
+.action-label:hover { background-color: #ddd; }
+ 
+.close-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 공룡 관련 이미지 및 테이블(표) 꾸미기 */
+.dino-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+table.dino-table {
     width: 100%;
     border-collapse: collapse;
+    margin: 15px 0;
 }
-
-.styled-table th, .styled-table td {
-    border: 1px solid #000000;
-    padding: 12px 15px;
+table.dino-table th, table.dino-table td {
+    border: 1px solid #999;
+    padding: 8px;
     text-align: left;
 }
-
-.styled-table th {
-    background-color: #000000;
-    color: #ffffff;
-}
+table.dino-table th { background-color: #f5f5f5; width: 30%; color: #333; }
+ 
+/* 조건 6 충족: a 태그 꾸미기 */
+a { color: #0056b3; text-decoration: none; font-weight: bold; }
+a:hover { text-decoration: underline; }
