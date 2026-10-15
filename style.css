@@ -26,7 +26,8 @@ body {
 }
 #dark-mode-toggle:checked ~ .app-wrapper .content-area,
 #dark-mode-toggle:checked ~ .app-wrapper .bottom-menu,
-#dark-mode-toggle:checked ~ .app-wrapper .dropdown-list {
+#dark-mode-toggle:checked ~ .app-wrapper .dropdown-list,
+#dark-mode-toggle:checked ~ .app-wrapper .card {
     background-color: #2a2a2a;
     border-color: #555;
     color: #fff;
@@ -37,6 +38,13 @@ body {
 }
 #dark-mode-toggle:checked ~ .app-wrapper a {
     color: #8ab4f8; /* 어두운 배경에 맞는 링크 색상 */
+}
+/* 다크모드 시 인풋, 버튼 색상 변경 */
+#dark-mode-toggle:checked ~ .app-wrapper .card input,
+#dark-mode-toggle:checked ~ .app-wrapper .card button {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #777;
 }
 
 /* 텍스트 확대 활성화 시 CSS 변경 */
@@ -262,3 +270,27 @@ table.dino-table th { background-color: #f5f5f5; width: 30%; color: #333; }
 /* 조건 6 충족: a 태그 꾸미기 */
 a { color: #0056b3; text-decoration: none; font-weight: bold; }
 a:hover { text-decoration: underline; }
+
+/* === JS 기능 테스트 카드 추가 디자인 === */
+.card {
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+.card input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.card button {
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+.card button:hover {
+    background-color: #333;
+}
