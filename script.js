@@ -1,6 +1,6 @@
 
-const id="junamsu";
-const pw="helloworld";
+const id="jigun";
+const pw="0801";
 
 //로그인
 const loginForm = document.querySelector("#loginForm");
